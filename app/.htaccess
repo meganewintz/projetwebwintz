@@ -1,0 +1,2 @@
+# Empeche l'accès direct au dossier app pour tous le monde
+deny from all

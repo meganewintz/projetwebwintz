@@ -1,3 +1,3 @@
 # Répertoire Application
 
-**Les contrôleurs/vues/modèles doivent être ajoutés ici **
+**Les contrôleurs/vues/modèles sont ajoutés ici **
