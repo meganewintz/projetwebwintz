@@ -18,7 +18,7 @@ if (isset($_FILES['file']) AND $_FILES['file']['error'] == 0)
         echo " photo recu : " . $_FILES['file']['tmp_name'] . "<br/>";
         //if(move_uploaded_file($_FILES['file']['tmp_name'], $chemin))
         //{
-          echo "L'envoi a bien été effectué !";
+          echo "L'envoi a bien été effectué !!";
         //}
         //else { echo "erreur lors de l'enregistrement";}
       }
