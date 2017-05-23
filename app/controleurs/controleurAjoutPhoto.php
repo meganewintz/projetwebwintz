@@ -16,11 +16,11 @@ if (isset($_FILES['file']) AND $_FILES['file']['error'] == 0)
         // On peut valider le fichier et le stocker définitivement
         $chemin = '../../public/img/fulls/01.' . $infosfichier['extension'];
         echo " photo recu : " . $_FILES['file']['tmp_name'] . "<br/>";
-        //if(move_uploaded_file($_FILES['file']['tmp_name'], $chemin))
-        //{
+        if(move_uploaded_file($_FILES['file']['tmp_name'], $chemin))
+        {
           echo "L'envoi a bien été effectué !!";
-        //}
-        //else { echo "erreur lors de l'enregistrement";}
+        }
+        else { echo "erreur lors de l'enregistrement";}
       }
       else
       {
@@ -47,6 +47,8 @@ if (count($erreur) > 0) {
 	//Pas d'erreur, on notifie
 	echo "<h1>Votre formulaire semble correct</h1>";
   echo $_POST['pseudo'];
+  echo "<a href=\"/public/img/fulls/01.jpg\"><img src=\"/public/templated/images/thumbs/02.jpg\" alt=\"\" title=\"Ma photo\" /></a>
+</div>";
 }
 
 
