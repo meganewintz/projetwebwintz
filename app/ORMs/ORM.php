@@ -1,5 +1,4 @@
 <?php
-require_once 'Configuration.php';
 
 /**
  * Classe abstraite Modèle.
@@ -35,6 +34,7 @@ abstract class ORM {
         else {
             $resultat = static::getBdd()->query($sql); // exécution directe
         }
+        $req->closeCursor();
         return $resultat;
     }
 
@@ -75,21 +75,4 @@ abstract class ORM {
         }
     }
 
-    /**
-     * Renvoie un objet de connexion à la BDD en initialisant la connexion au besoin
-     *
-     * @return PDO Objet PDO de connexion à la BDD
-     */
-    protected static function getBdd() {
-        if (static::$bdd === null) {
-            // Récupération des paramètres de configuration BD
-            $dsn = Configuration::getConf("dsn");
-            $login = Configuration::getConf("login");
-            $mdp = Configuration::getConf("mdp");
-            // Création de la connexion
-            static::$bdd = new PDO($dsn, $login, $mdp,
-                    array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-        }
-        return static::$bdd;
-    }
 }

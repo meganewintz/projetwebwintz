@@ -1,2 +1,0 @@
-# Empeche l'accès direct au dossier core pour tous le monde
-deny from all
