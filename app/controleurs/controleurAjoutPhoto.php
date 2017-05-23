@@ -14,9 +14,13 @@ if (isset($_FILES['file']) AND $_FILES['file']['error'] == 0)
       if (in_array($extension_upload, $extensions_autorisees))
       {
         // On peut valider le fichier et le stocker définitivement
-        echo "ICI";
-        move_uploaded_file($_FILES['file']['tmp_name'], '../../public/img/fulls/01.' . $infosfichier['extension']);
-        echo "L'envoi a bien été effectué !";
+        $chemin = '../../public/img/fulls/01.' . $infosfichier['extension'];
+        echo " photo recu : " . $_FILES['file']['tmp_name'] . "<br/>";
+        if(move_uploaded_file($_FILES['file']['tmp_name'], $chemin));
+        {
+          echo "L'envoi a bien été effectué !";
+        }
+        else { echo "erreur lors de l'enregistrement";}
       }
       else
       {
