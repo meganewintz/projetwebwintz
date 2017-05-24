@@ -9,8 +9,8 @@
 
 CREATE TABLE utilisateur (
     idUtilisateur SERIAL PRIMARY KEY NOT NULL,
-    pseudo Varchar(20),
-    mdp Varchar(20)
+    pseudo VARCHAR(20),
+    mdp TEXT
 );
 
 #------------------------------------------------------------
@@ -19,7 +19,7 @@ CREATE TABLE utilisateur (
 
 CREATE TABLE pays (
     idPays SERIAL PRIMARY KEY NOT NULL,
-    nomPays Varchar(50)
+    nomPays VARCHAR(50)
 );
 
 #------------------------------------------------------------
@@ -28,20 +28,10 @@ CREATE TABLE pays (
 
 CREATE TABLE ville (
     idVille SERIAL PRIMARY KEY NOT NULL,
-    nomVille Varchar(50),
-    idPays int REFERENCES pays(idPays)
+    nomVille VARCHAR(50),
+    idPays INT REFERENCES pays(idPays)
 );
 
-#------------------------------------------------------------
-# Table: position
-#------------------------------------------------------------
-
-CREATE TABLE position (
-    idPosition SERIAL PRIMARY KEY NOT NULL,
-    latitude decimal,
-    longitude decimal,
-    idVille int REFERENCES ville(idVille)
-);
 
 #------------------------------------------------------------
 # Table: catégorie
@@ -49,7 +39,7 @@ CREATE TABLE position (
 
 CREATE TABLE categorie (
     idCategorie SERIAL PRIMARY KEY NOT NULL,
-    nomCategorie Varchar(50)
+    nomCategorie VARCHAR(50)
 );
 
 #------------------------------------------------------------
@@ -58,10 +48,13 @@ CREATE TABLE categorie (
 
 CREATE TABLE photo(
     idPhoto SERIAL PRIMARY KEY NOT NULL,
-    titre Varchar(100),
-    description Varchar(500),
-    url Varchar(200),
-    idUtilisateur int REFERENCES utilisateur(idUtilisateur),
-    idCategorie int REFERENCES categorie(idCategorie),
-    idPosition int REFERENCES position(idPosition)
+    titre VARCHAR(100),
+    description VARCHAR(500),
+    urlFull VARCHAR(200),
+    urlThumb VARCHAR(200),
+    latitude INT,
+    longitude INT,
+    idUtilisateur INT REFERENCES utilisateur(idUtilisateur),
+    idCategorie INT REFERENCES categorie(idCategorie),
+    idVille INT REFERENCES ville(idVille)
 );

@@ -97,10 +97,14 @@ class Categorie
      }
    }
 
+   /**
+    * affichage du type Catégorie,
+    * retourne son nom.
+    *
+    */
+   public function __toString()
+    {
+        return $this->nomCategorie;
+    }
+
 }
-
-
-  $cate = new Categorie("Animaux");
-  $cate->setNomCategorie("Chien");
-
-  echo $cate->getNomCategorie();

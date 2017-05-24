@@ -40,11 +40,14 @@ class Utilisateur
     // Si l'id est bien positif et les strings de bonne taille
     if (
         is_string($pseudo) && strlen($pseudo) <= 20 &&
-        is_string($mdp) && strlen($mdp) <= 20)
+        is_string($mdp))
     {
-      $this->iUtilisateur = $id;
+      $this->idUtilisateur = $id;
       $this->pseudo = $pseudo;
       $this->mdp = $mdp;
+    }
+    else {
+      echo "Erreur lors de la création de l'Utilisateur, vérifier les parametres";
     }
   }
 
@@ -119,7 +122,7 @@ class Utilisateur
     /**
      * Définie le mot de passe de l'utilisateur
      *
-     * @param string $pseudo
+     * @param string $mdp
      * @return void
      */
      public function setMdp($mdp)
@@ -130,5 +133,15 @@ class Utilisateur
          $this->mdp = $mdp;
        }
      }
+
+     /**
+      * affichage du type utilisateur
+      * retourne son pseudo.
+      *
+      */
+     public function __toString()
+      {
+          return $this->pseudo;
+      }
 
 }

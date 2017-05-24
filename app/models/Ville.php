@@ -132,8 +132,13 @@ class Ville
      }
    }
 
+   /**
+    * affichage du type Ville,
+    * retourne son nom.
+    *
+    */
+   public function __toString()
+    {
+        return $this->nomVille;
+    }
 }
-
-$Montpellier = new Ville("Montpellier", 2);
-
-echo $Montpellier->getNomVille();

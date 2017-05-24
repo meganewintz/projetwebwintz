@@ -7,7 +7,7 @@ Structure de la table :
 
 /**
  * Représentation objet de la table pays
- * de notre base de données
+ * de notre base de données.
  *
  * @author Mégane Wintz
  */
@@ -45,6 +45,7 @@ class Pays
 
   /**
   * Récupère l'id du Pays
+  *
   * @return int
   */
   public function getIdPays()
@@ -69,7 +70,7 @@ class Pays
   /**
    * Définie l'id du pays
    *
-   * @param int
+   * @param int $id
    * @return void
    */
    public function setIdPays($id)
@@ -84,7 +85,7 @@ class Pays
    /**
     * Définie le nom du pays
     *
-    * @param string
+    * @param string $nom
     * @return void
     */
     public function setNomPays($nom)
@@ -96,4 +97,14 @@ class Pays
         $this->nomPays = $nom;
       }
     }
+
+    /**
+     * affichage du type Pays,
+     * retourne son nom.
+     *
+     */
+    public function __toString()
+     {
+         return $this->nomPays;
+     }
 }

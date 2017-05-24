@@ -1,6 +1,6 @@
 <?php
 
-
+require_once '../../config/connexionBDD.php';
 // Testons si le fichier a bien été envoyé et s'il n'y a pas d'erreur
 if (isset($_FILES['file']) AND $_FILES['file']['error'] == 0)
 {
@@ -43,13 +43,24 @@ if (count($erreur) > 0) {
 	//Il y a des erreurs, on les affiche
 	echo "<h1>Saisie invalide !</h1>";
 	echo $erreur;
-} else {
+}
+else
+{
 	//Pas d'erreur, on notifie
 	echo "<h1>Votre formulaire semble correct</h1>";
   echo $_POST['pseudo'];
-  echo "<a href=\"/public/img/fulls/01.jpg\"><img src=\"/public/templated/images/thumbs/02.jpg\" alt=\"\" title=\"Ma photo\" /></a>
-</div>";
+  echo "<a href=\"/public/img/fulls/01.jpg\"><img src=\"/public/templated/images/thumbs/02.jpg\" alt=\"\" title=\"Ma photo\" /></a>";
+
+
+  $sql = "INSERT INTO image values ('$name',lo_import('$chemin') , 'now')";
+  $bdd->exec($sqlOid) or die(print_r($bdd->errorInfo(), true));
+  echo "Ah";
+  $bdd->exec($sql) or die(print_r($bdd->errorInfo(), true));
+  echo "File is valid, and was successfully uploaded.\n";
+  unlink($uploadfile);
+
 }
+
 
 
 ?>

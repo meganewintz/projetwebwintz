@@ -1,6 +1,5 @@
 <?php
 require_once '../../config/connexionBDD.php';
-require_once 'ORM.php';
 require_once '../models/Categorie.php';
 
 /* Modèle pour la table categorie
@@ -16,21 +15,21 @@ Structure de la table :
  * @author Mégane Wintz
  */
 
-class ORMCategorie extends ORM
+class ORMCategorie
 {
   /**
    * @var PDO $bdd
    */
-  public static $bdd; //instance de PDO
+  private $bdd; //instance de PDO
 
   /**
    * Constructeur
    *
-   * @param PDO $bdd
+   * @param PDO $db
    */
-  public function __construct(PDO $bdd)
+  public function __construct($db)
   {
-    $this->$bdd = $bdd;
+    $this->bdd = $db;
   }
 
 
@@ -43,33 +42,39 @@ class ORMCategorie extends ORM
    */
   public function insertCategorie($nom)
   {
-    // $sql = 'INSERT INTO categorie (nomcategorie) VALUES (:nomcategorie)';
-    // $params = [
-    //   'nomcategorie' => $nom
-    // ];
-    // $typeArray = [
-    //   'nomcategorie' => PDO::PARAM_STR,
-    // ];
-    // try {
-    //     $this->executerRequete($sql, $params, $typeArray);
-    //     return true;
-    // }
-    // catch (Exception $e) {
-    //     return false;
-    // }
+    try {
+      $sql = $this->bdd->prepare('INSERT INTO categorie(nomcategorie) VALUES(:nomcategorie)');
+      $sql->bindValue(':nomcategorie', $nom, PDO::PARAM_STR);
+      $sql->execute();
+    }
+    catch(PDOException $e) {
+      echo $sql . "<br/>" . $e->getMessage();
+    }
   }
-}
-// $sql = "INSERT INTO categorie(idcategorie, nomcategorie) VALUES ("", 'Animaux')";
-// $bdd->exec($sql);
 
-try {
-    $sql = "INSERT INTO categorie (idcategorie, nomcategorie)
-    VALUES (DEFAULT, 'Animaux')";
-    // use exec() because no results are returned
-    $bdd->exec($sql);
-    echo "New record created successfully";
-    }
-catch(PDOException $e)
+  /**
+   * Selectionne l'ensemble des catégories
+   * et les places dans un tableau de Catégorie
+   *
+   * @return Categorie[]
+   */
+    public function getAllCategories()
     {
-    echo $sql . "<br>" . $e->getMessage();
+      $categories = [];
+      $sql = $this->bdd->query('SELECT idcategorie, nomcategorie FROM categorie ORDER BY nomcategorie') or die(print_r($this->bdd->errorInfo()));
+      $i = 0;
+      while ($donnees = $sql->fetch(PDO::FETCH_ASSOC))
+      {
+        $categories[$i] = new Categorie($donnees['nomcategorie'], $donnees['idcategorie']);
+        $i++;
+      }
+      return $categories;
     }
+
+}
+
+// $ormCategorie = new ORMCategorie($bdd);
+// $listeCategories = $ormCategorie->getAllCategories();
+// foreach ($listeCategories as $categorie => $value) {
+//     echo $listeCategories[$categorie] . "<br/>";
+// }

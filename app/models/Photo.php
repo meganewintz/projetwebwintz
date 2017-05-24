@@ -4,10 +4,13 @@ Structure de la table :
 - idPhoto (int)
 - titre (string)
 - description (string)
-- url (string)
+- urlFull (string)
+- urlThumb (string)
+- latitude (int)
+- longitude (int)
 - idUtilisateur (int)
 - idCategorie (int)
-- idPosition (int)
+- idVille (int)
 */
 
 /**
@@ -33,9 +36,21 @@ class Photo
    */
   private $description;
   /**
-   * @var string $url
+   * @var string $urlFull [url de l'image taille originale]
    */
-  private $url;
+  private $urlFull;
+  /**
+   * @var string $urlThumb [url de l'image redimensionnée]
+   */
+  private $urlThumb;
+  /**
+   * @var int $latitude
+   */
+  private $latitude;
+  /**
+   * @var int $longitude
+   */
+  private $longitude;
   /**
    * @var int $idUtilisateur
    */
@@ -45,9 +60,9 @@ class Photo
    */
   private $idCategorie;
   /**
-   * @var int $idPosition
+   * @var int $idVille
    */
-  private $idPosition;
+  private $idVille;
 
   /**
    * Constructeur
@@ -56,16 +71,16 @@ class Photo
    * @param string $url
    * @param string $idUtil
    * @param string $idCat
-   * @param string $idPos
+   * @param string $idV
    * @param int $id [NULL par défaut]
    */
-  public function __construct($titre, $desc, $url, $idUtil, $idCat, $idPos, $id = NULL)
+  public function __construct($titre, $desc, $url, $idUtil, $idCat, $idV, $id = NULL)
   {
     // Si les ids sont bien positifs et les strings de bonne taille
     if (
       is_int($idUtil) && $idUtil > 0 &&
       is_int($idCat) && $idCat > 0 &&
-      is_int($idPos) && $idPos > 0 &&
+      is_int($idV) && $idV > 0 &&
       is_string($titre) && strlen($titre) <= 100 &&
       is_string($description) && strlen($description) <= 500 &&
       is_string($url) && strlen($url) <= 200
@@ -77,7 +92,7 @@ class Photo
       $this->url = $url;
       $this->idUtilisateur = $idUtil;
       $this->idCategorie = $idCat;
-      $this->idPosition = $idPos;
+      $this->idVille = $idV;
     }
   }
 
@@ -116,13 +131,43 @@ class Photo
   }
 
   /**
-  * Récupère l'url de la Photo
+  * Récupère l'url de la Photo originale
   *
   * @return string
   */
-  public function getUrl()
+  public function getUrlFull()
   {
-    return $this->url;
+    return $this->urlFull;
+  }
+
+  /**
+  * Récupère l'url de la Photo redimensionnée
+  *
+  * @return string
+  */
+  public function getUrlThumb()
+  {
+    return $this->urlThumb;
+  }
+
+  /**
+  * Récupère la latitude associée à la Photo
+  *
+  * @return int
+  */
+  public function getLatitude()
+  {
+    return $this->latitude;
+  }
+
+  /**
+  * Récupère la longitude associée à la Photo
+  *
+  * @return int
+  */
+  public function getLongitude()
+  {
+    return $this->longitude;
   }
 
   /**
@@ -150,9 +195,9 @@ class Photo
   *
   * @return int
   */
-  public function getIdPosition()
+  public function getidVille()
   {
-    return $this->idPosition;
+    return $this->idVille;
   }
 
   #------------------------------------------------------------
@@ -162,7 +207,7 @@ class Photo
   /**
    * Définie l'id de la photo
    *
-   * @param int
+   * @param int $id
    * @return void
    */
    public function setIdPhoto($id)
@@ -177,7 +222,7 @@ class Photo
    /**
     * Définie le titre de la photo
     *
-    * @param string
+    * @param string $titre
     * @return void
     */
    public function setTitre($titre)
@@ -193,7 +238,7 @@ class Photo
    /**
     * Définie la description de la photo
     *
-    * @param string
+    * @param string $desc
     * @return void
     */
    public function setDescription($desc)
@@ -207,25 +252,71 @@ class Photo
    }
 
    /**
-    * Définie l'url de la photo
+    * Définie l'url de la photo originale
     *
-    * @param string
+    * @param string $url
     * @return void
     */
-   public function setUrl($url)
+   public function setUrlFull($url)
    {
      // On vérifie qu'il s'agit bien d'un string
      // et que sa longueur est inférieure à 200.
      if (is_string($url) && strlen($url) <= 200)
      {
-       $this->url = $url;
+       $this->urlFull = $url;
+     }
+   }
+
+   /**
+    * Définie l'url de la photo redimensionnée
+    *
+    * @param string $url
+    * @return void
+    */
+   public function setUrlThumb($url)
+   {
+     // On vérifie qu'il s'agit bien d'un string
+     // et que sa longueur est inférieure à 200.
+     if (is_string($url) && strlen($url) <= 200)
+     {
+       $this->urlThumb = $url;
+     }
+   }
+
+   /**
+    * Définie la latitude associée à la photo
+    *
+    * @param int $lat
+    * @return void
+    */
+   public function setLatitude($lat)
+   {
+     // On vérifie qu'il s'agit bien d'un int
+     if (is_int($lat))
+     {
+       $this->latitude = $lat;
+     }
+   }
+
+   /**
+    * Définie la longitude associée à la photo
+    *
+    * @param int $long
+    * @return void
+    */
+   public function setLongitude($long)
+   {
+     // On vérifie qu'il s'agit bien d'un int
+     if (is_int($long))
+     {
+       $this->longitude = $long;
      }
    }
 
    /**
     * Définie l'id utilisateur associé à la photo
     *
-    * @param int
+    * @param int $id
     * @return void
     */
    public function setIdUtilisateur($id)
@@ -240,7 +331,7 @@ class Photo
    /**
     * Définie l'id categorie associé à la photo
     *
-    * @param int
+    * @param int $id
     * @return void
     */
    public function setIdCategorie($id)
@@ -255,15 +346,25 @@ class Photo
    /**
     * Définie l'id position associé à la photo
     *
-    * @param int : l'id position que l'on veut lui attribuer
+    * @param int $id
     */
-   public function setIdPosition($id)
+   public function setidVille($id)
    {
      // On vérifie qu'il s'agit bien d'un int
      if (is_int($id) && $id > 0)
      {
-       $this->idPosition = $id;
+       $this->idVille = $id;
      }
    }
+
+   /**
+    * affichage du type Photo,
+    * retourne son titre.
+    *
+    */
+   public function __toString()
+    {
+        return $this->titre;
+    }
 
 }
