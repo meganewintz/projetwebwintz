@@ -54,7 +54,6 @@
       ?>
       </select>
     </div>
-    <br />
   <ul class="actions">
     <li><input value="Envoyer" class="button" type="submit"></li>
   </ul>

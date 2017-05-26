@@ -1,7 +1,7 @@
 <?php
 require_once '../../config/connexionBDD.php';
 require_once "header.php";
-require_once "../controllers/controllerGalerie.php"
+require_once "../controllers/controllerGalerie.php";
 ?>
 <!-- CSS stylesheets -->
 <link rel="stylesheet" href="/public/css/galerie.css" />
