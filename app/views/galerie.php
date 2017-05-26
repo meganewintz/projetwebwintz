@@ -19,27 +19,74 @@ require_once "../controllers/controllerGalerie.php";
 
           <!-- Filters -->
             <header>
-              <h1>Gallery</h1>
-              <ul class="tabs">
-                <li><a href="#" data-tag="all" class="button active">All</a></li>
-                <!-- <li> -->
-                  <!-- <FORM NAME="choixCategorie">
-                    <SELECT NAME="listeCategorie" onChange="affichageParCategorie()">
-                      <OPTION VALUE="">Catégorie
-                      <OPTION VALUE="../../copains.html">Les copains
-                      <OPTION VALUE="../../plongee/index.html">La plongée
-                      <OPTION VALUE="http://www.google.com">Recherche
-                      </SELECT>
-                    </FORM></li> -->
-                <li><a href="#" id ="utilisateur" onClick="afficherParUtilisateurs()" class="button">Utilisateur</a></li>
-                <li><a href="#" id="categorie" onClick="afficherParCategories()" class="button">Catégorie</a></li>
-                <li><a href="#" id="ville" onClick="afficherParVilles()" class="button">Ville</a></li>
-                <li><a href="#" id="pays" onClick="afficherPays()" class="button">Pays</a></li>
-              </ul>
+              <h1>Galerie photos</h1>
+
+              s
+              <form name="choixAffichage" method="post" action='galerie.php'>
+                  <a href="#" data-tag="all" class="button active">Tout afficher</a>
+                  <select name="categorie">
+                    <option value="">Affichage par categorie</option>
+                    <?php $ormCategorie = new ORMCategorie($bdd);
+                    $listeCategories = $ormCategorie->getAllCategories();
+                    foreach ($listeCategories as $categorie) {
+                        echo "<option value=\"" . $categorie . "\">" . $categorie . "</option>";
+                    }
+                    ?>
+                  </select>
+                  <select name="utilisateur">
+                    <option value="">Affichage par utilisateur</option>
+                    <?php $ormUtilisateur = new ORMUtilisateur($bdd);
+                    $listeUtilisateurs = $ormUtilisateur->getAllUtilisateurs();
+                    foreach ($listeUtilisateurs as $utilisateur) {
+                        echo "<option value=\"" . $utilisateur . "\">" . $utilisateur . "</option>";
+                    }
+                    ?>
+                  </select>
+                  <select name="ville">
+                    <option value="">Affichage par ville</option>
+                    <?php $ormVille = new ORMVille($bdd);
+                    $listeVilles = $ormVille->getAllVilles();
+                    foreach ($listeVilles as $ville) {
+                        echo "<option value=\"" . $ville . "\">" . $ville . "</option>";
+                    }
+                    ?>
+                  </select>
+                  <select name="pays">
+                    <option value="">Affichage par pays</option>
+                    <?php $ormPays = new ORMPays($bdd);
+                    $listePays = $ormPays->getAllPays();
+                    foreach ($listePays as $pays) {
+                        echo "<option value=\"" . $pays . "\">" . $pays . "</option>";
+                    }
+                    ?>
+                  </select>
+                  <input type="submit" name="valider" value="OK"/><br/>
+              </form>
             </header>
 
             <div class="content" id="content">
-              <?php afficherPhotos($bdd, ""); ?>
+              <?php
+              //Gérer chaque choix :
+              if (!($_POST['categorie'] == ""))
+              {
+                afficherPhotosCategorie($bdd, $choix);
+              }
+              elseif (!($_POST['utilisateur'] == ""))
+              {
+                afficherPhotosUtilisateur($bdd, $choix);
+              }
+              elseif (!($_POST['ville'] == ""))
+              {
+                afficherPhotosVille($bdd, $choix);
+              }
+              elseif (!($_POST['pays'] == ""))
+              {
+                afficherPhotosPays($bdd, $choix);
+              }
+              else {
+                afficherPhotos($bdd);
+              }
+              ?>
             </div>
         </div>
         <script src="../js/galerie.js"></script>

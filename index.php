@@ -1,2 +1,2 @@
 
-<?php require_once "app/views/accueil.php"; ?>
+<?php require_once "app/views/accueil.php";?>

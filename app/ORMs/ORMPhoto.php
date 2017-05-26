@@ -80,7 +80,7 @@ class ORMPhoto
       $sql->execute();
     }
     catch(PDOException $e) {
-      echo $sql . "<br/>" . $e->getMessage();
+      die( $sql . "<br/>" . $e->getMessage());
     }
 
   }
@@ -151,18 +151,21 @@ class ORMPhoto
    * et les places dans un tableau de Photo
    *
    * @param string $categorie
-   * @return Photo[]
+   * @return Photo[] ou string si pas de résultat
    */
   public function getAllPhotosCategorie($categorie)
   {
     $requete = 'SELECT idphoto, titre, description, urlfull, urlthumb, idutilisateur, p.idcategorie, idville FROM categorie c, photo p WHERE c.idcategorie = p.idcategorie AND c.nomcategorie =\'' . $categorie . '\'';
     $listePhotos = [];
     $sql = $this->bdd->query($requete) or die(print_r($this->bdd->errorInfo()));
-    $i = 0;
-    while ($donnees = $sql->fetch(PDO::FETCH_ASSOC))
+    if($sql->rowCount() > 0)
     {
-      $listePhotos[$i] = new Photo($donnees['titre'], $donnees['urlfull'], $donnees['urlthumb'], $donnees['idutilisateur'], $donnees['idcategorie'], $donnees['idville'], $donnees['idphoto'], $donnees['description']);
-      $i++;
+      $i = 0;
+      while ($donnees = $sql->fetch(PDO::FETCH_ASSOC))
+      {
+        $listePhotos[$i] = new Photo($donnees['titre'], $donnees['urlfull'], $donnees['urlthumb'], $donnees['idutilisateur'], $donnees['idcategorie'], $donnees['idville'], $donnees['idphoto'], $donnees['description']);
+        $i++;
+      }
     }
     return $listePhotos;
   }
@@ -262,8 +265,9 @@ $ormPhoto = new ORMPhoto($bdd);
 // echo $ormPhoto->getVille(18);
 // echo "<br/>";
 //echo $ormPhoto->getPays(18);
-// $listePhotos = $ormPhoto->getAllPhotosPays("France");
-// foreach ($listePhotos as $photo => $value) {
-//     echo $listePhotos[$photo] . "<br/>";
-// }
+// $listePhotos = $ormPhoto->getAllPhotosCategorie("Paysage");
+// if (empty($listePhotos)) echo "vide";
+// // foreach ($listePhotos as $photo => $value) {
+// //     echo $listePhotos[$photo] . "<br/>";
+// // }
 // $ormPhoto->insertPhoto('megane', 'meg', 'meg', 'Johanna', 'Animaux', 'Paris', "");

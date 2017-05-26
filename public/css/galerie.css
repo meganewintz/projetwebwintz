@@ -3,3 +3,8 @@
   position: relative !important;
   line-height: 20px !important;
 }
+
+select {
+  color: #FFF;
+  background: #22313F;
+}
