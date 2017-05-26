@@ -54,6 +54,20 @@ class ORMPays
   }
 
   /**
+   * Retourne l'id du nom du pays entrée en paramètre
+   *
+   * @param string $nom
+   * @return int
+   */
+  public function getIdPays($nom)
+  {
+    $sql = $this->bdd->query("SELECT idpays FROM pays WHERE nompays = '$nom'") or die(print_r($this->bdd->errorInfo()));
+    $donnees = $sql->fetch(PDO::FETCH_ASSOC);
+    return $donnees['idpays'];
+
+  }
+
+  /**
    * Selectionne l'ensemble des pays
    * et les places dans un tableau de Pays
    *
@@ -73,8 +87,10 @@ class ORMPays
     }
 }
 
-$ormPays = new ORMPays($bdd);
-$listePays = $ormPays->getAllPays();
-foreach ($listePays as $pays => $value) {
-    echo $listePays[$pays] . "<br/>";
-}
+// $ormPays = new ORMPays($bdd);
+// $listePays = $ormPays->getAllPays();
+// foreach ($listePays as $pays => $value) {
+//     echo $listePays[$pays] . "<br/>";
+// }
+//
+// echo $ormPays->getIdPays("France");

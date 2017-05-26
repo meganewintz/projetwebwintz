@@ -1,6 +1,9 @@
 <?php
 require_once '../../config/connexionBDD.php';
 require_once '../models/Ville.php';
+require_once 'ORMPays.php';
+
+
 
 /* Modèle pour la table Ville
 Structure de la table :
@@ -37,20 +40,36 @@ class ORMVille
    * Insert une nouvelle ville à
    * notre base de données
    *
-   * @param string $nom
+   * @param string $nomVille
+   * @param string $nomPays [son pays associé]
    * @return void
    */
-  public function insertVille($nom)
+  public function insertVille($nomVille, $nomPays)
   {
+    $ormPays = new ORMPays($this->bdd);
+    $idPays = $ormPays->getIdPays($nomPays);
     try {
-      $sql = $this->bdd->prepare('INSERT INTO ville(nomville) VALUES(:nomville)');
-      $sql->bindValue(':nomville', $nom, PDO::PARAM_STR);
+      $sql = $this->bdd->prepare('INSERT INTO ville(nomville, idpays) VALUES(:nomville, :idpays)');
+      $sql->bindValue(':nomville', $nomVille, PDO::PARAM_STR);
+      $sql->bindValue(':idpays', $idPays, PDO::PARAM_INT);
       $sql->execute();
     }
-    catch(Exception $e) {
+    catch(PDOException $e) {
       echo $sql . "<br/>" . $e->getMessage();
     }
+  }
 
+  /**
+   * Retourne l'id du nom de la ville entrée en paramètre
+   *
+   * @param string $nom
+   * @return int
+   */
+  public function getIdVille($nom)
+  {
+    $sql = $this->bdd->query("SELECT idville FROM ville WHERE nomville = '$nom'") or die(print_r($this->bdd->errorInfo()));
+    $donnees = $sql->fetch(PDO::FETCH_ASSOC);
+    return $donnees['idville'];
   }
 
   /**
@@ -72,3 +91,8 @@ class ORMVille
       return $listeVilles;
     }
 }
+
+$ormVille = new ORMVille($bdd);
+//$ormVille->insertVille("Cannes", "France");
+
+// $ormVille->getIdVille("Cannes");

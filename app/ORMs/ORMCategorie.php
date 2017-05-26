@@ -53,6 +53,19 @@ class ORMCategorie
   }
 
   /**
+   * Retourne l'id du nom de la categorie entrée en paramètre
+   *
+   * @param string $nom
+   * @return int
+   */
+  public function getIdCategorie($nom)
+  {
+    $sql = $this->bdd->query("SELECT idCategorie FROM categorie WHERE nomcategorie = '$nom'") or die(print_r($this->bdd->errorInfo()));
+    $donnees = $sql->fetch(PDO::FETCH_ASSOC);
+    return $donnees['idcategorie'];
+  }
+
+  /**
    * Selectionne l'ensemble des catégories
    * et les places dans un tableau de Catégorie
    *
@@ -75,6 +88,6 @@ class ORMCategorie
 
 // $ormCategorie = new ORMCategorie($bdd);
 // $listeCategories = $ormCategorie->getAllCategories();
-// foreach ($listeCategories as $categorie => $value) {
-//     echo $listeCategories[$categorie] . "<br/>";
+// foreach ($listeCategories as $categorie) {
+//     echo $categorie . "<br/>";
 // }

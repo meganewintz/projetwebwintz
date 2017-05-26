@@ -75,6 +75,20 @@ class ORMUtilisateur
 
     }
 
+    /**
+     * Retourne l'id du nom de l'utilisateur entrée en paramètre
+     *
+     * @param string $nom
+     * @return int
+     */
+    public function getIdUtilisateur($pseudo)
+    {
+      $sql = $this->bdd->query("SELECT idutilisateur FROM utilisateur WHERE pseudo = '$pseudo'") or die(print_r($this->bdd->errorInfo()));
+      $donnees = $sql->fetch(PDO::FETCH_ASSOC);
+      return $donnees['idutilisateur'];
+
+    }
+
   /**
    * Selectionne l'ensemble des utilisateurs
    * et les places dans un tableau de Utilisateur

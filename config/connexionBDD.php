@@ -13,7 +13,8 @@ $password = "3d0fdba9871e93c4d29f627d3b73a00703b490cc5d07941e3e6c3cb656b6071f";
 try
 {
   $bdd = new PDO("pgsql:dbname=$dbname;host=$host", $user, $password);
-  $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+  $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  // PDO::ERRMODE_WARNING
 }
 catch (Exception $e)
 {

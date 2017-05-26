@@ -50,10 +50,8 @@ CREATE TABLE photo(
     idPhoto SERIAL PRIMARY KEY NOT NULL,
     titre VARCHAR(100),
     description VARCHAR(500),
-    urlFull VARCHAR(200),
-    urlThumb VARCHAR(200),
-    latitude INT,
-    longitude INT,
+    urlFull TEXT,
+    urlThumb TEXT,
     idUtilisateur INT REFERENCES utilisateur(idUtilisateur),
     idCategorie INT REFERENCES categorie(idCategorie),
     idVille INT REFERENCES ville(idVille)

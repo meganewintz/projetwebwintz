@@ -6,8 +6,6 @@ Structure de la table :
 - description (string)
 - urlFull (string)
 - urlThumb (string)
-- latitude (int)
-- longitude (int)
 - idUtilisateur (int)
 - idCategorie (int)
 - idVille (int)
@@ -44,14 +42,6 @@ class Photo
    */
   private $urlThumb;
   /**
-   * @var int $latitude
-   */
-  private $latitude;
-  /**
-   * @var int $longitude
-   */
-  private $longitude;
-  /**
    * @var int $idUtilisateur
    */
   private $idUtilisateur;
@@ -74,7 +64,8 @@ class Photo
    * @param string $idV
    * @param int $id [NULL par défaut]
    */
-  public function __construct($titre, $desc, $url, $idUtil, $idCat, $idV, $id = NULL)
+
+  public function __construct($titre, $urlF, $urlT, $idUtil, $idCat, $idV, $id = NULL, $desc = NULL)
   {
     // Si les ids sont bien positifs et les strings de bonne taille
     if (
@@ -82,14 +73,14 @@ class Photo
       is_int($idCat) && $idCat > 0 &&
       is_int($idV) && $idV > 0 &&
       is_string($titre) && strlen($titre) <= 100 &&
-      is_string($description) && strlen($description) <= 500 &&
-      is_string($url) && strlen($url) <= 200
-      )
+      is_string($desc) && strlen($desc) <= 500 &&
+      is_string($urlF) && is_string($urlT) )
     {
       $this->idPhoto = $id;
       $this->titre = $titre;
       $this->description = $desc;
-      $this->url = $url;
+      $this->urlFull = $urlF;
+      $this->urlThumb = $urlT;
       $this->idUtilisateur = $idUtil;
       $this->idCategorie = $idCat;
       $this->idVille = $idV;
@@ -151,26 +142,6 @@ class Photo
   }
 
   /**
-  * Récupère la latitude associée à la Photo
-  *
-  * @return int
-  */
-  public function getLatitude()
-  {
-    return $this->latitude;
-  }
-
-  /**
-  * Récupère la longitude associée à la Photo
-  *
-  * @return int
-  */
-  public function getLongitude()
-  {
-    return $this->longitude;
-  }
-
-  /**
   * Récupère l'id de l'utilisateur associé à la Photo
   *
   * @return int
@@ -195,7 +166,7 @@ class Photo
   *
   * @return int
   */
-  public function getidVille()
+  public function getIdVille()
   {
     return $this->idVille;
   }
@@ -260,8 +231,7 @@ class Photo
    public function setUrlFull($url)
    {
      // On vérifie qu'il s'agit bien d'un string
-     // et que sa longueur est inférieure à 200.
-     if (is_string($url) && strlen($url) <= 200)
+     if (is_string($url))
      {
        $this->urlFull = $url;
      }
@@ -276,40 +246,9 @@ class Photo
    public function setUrlThumb($url)
    {
      // On vérifie qu'il s'agit bien d'un string
-     // et que sa longueur est inférieure à 200.
-     if (is_string($url) && strlen($url) <= 200)
+     if (is_string($url))
      {
        $this->urlThumb = $url;
-     }
-   }
-
-   /**
-    * Définie la latitude associée à la photo
-    *
-    * @param int $lat
-    * @return void
-    */
-   public function setLatitude($lat)
-   {
-     // On vérifie qu'il s'agit bien d'un int
-     if (is_int($lat))
-     {
-       $this->latitude = $lat;
-     }
-   }
-
-   /**
-    * Définie la longitude associée à la photo
-    *
-    * @param int $long
-    * @return void
-    */
-   public function setLongitude($long)
-   {
-     // On vérifie qu'il s'agit bien d'un int
-     if (is_int($long))
-     {
-       $this->longitude = $long;
      }
    }
 

@@ -1,4 +1,10 @@
-<?php require_once "header.php"; ?>
+<?php
+require_once '../../config/connexionBDD.php';
+require_once "header.php";
+require_once "../controllers/controllerGalerie.php"
+?>
+<!-- CSS stylesheets -->
+<link rel="stylesheet" href="/public/css/galerie.css" />
 
 <!-- Header -->
     <header id="header">
@@ -16,49 +22,25 @@
               <h1>Gallery</h1>
               <ul class="tabs">
                 <li><a href="#" data-tag="all" class="button active">All</a></li>
-                <li><a href="#" data-tag="people" class="button">People</a></li>
-                <li><a href="#" data-tag="place" class="button">Places</a></li>
-                <li><a href="#" data-tag="thing" class="button">Things</a></li>
+                <!-- <li> -->
+                  <!-- <FORM NAME="choixCategorie">
+                    <SELECT NAME="listeCategorie" onChange="affichageParCategorie()">
+                      <OPTION VALUE="">Catégorie
+                      <OPTION VALUE="../../copains.html">Les copains
+                      <OPTION VALUE="../../plongee/index.html">La plongée
+                      <OPTION VALUE="http://www.google.com">Recherche
+                      </SELECT>
+                    </FORM></li> -->
+                <li><a href="#" id ="utilisateur" onClick="afficherParUtilisateurs()" class="button">Utilisateur</a></li>
+                <li><a href="#" id="categorie" onClick="afficherParCategories()" class="button">Catégorie</a></li>
+                <li><a href="#" id="ville" onClick="afficherParVilles()" class="button">Ville</a></li>
+                <li><a href="#" id="pays" onClick="afficherPays()" class="button">Pays</a></li>
               </ul>
             </header>
 
-            <div class="content">
-              <div class="media all people">
-                <a href="/public/templated/images/fulls/01.jpg"><img src="/public/templated/images/thumbs/01.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all place">
-                <a href="/public/templated/images/fulls/05.jpg"><img src="/public/templated/images/thumbs/05.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all thing">
-                <a href="/public/templated/images/fulls/09.jpg"><img src="/public/templated/images/thumbs/09.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all people">
-                <a href="/public/templated/images/fulls/02.jpg"><img src="/public/templated/images/thumbs/02.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all place">
-                <a href="/public/templated/images/fulls/06.jpg"><img src="/public/templated/images/thumbs/06.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all thing">
-                <a href="/public/templated/images/fulls/10.jpg"><img src="/public/templated/images/thumbs/10.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all people">
-                <a href="/public/templated/images/fulls/03.jpg"><img src="/public/templated/images/thumbs/03.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all place">
-                <a href="/public/templated/images/fulls/07.jpg"><img src="/public/templated/images/thumbs/07.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all thing">
-                <a href="/public/templated/images/fulls/11.jpg"><img src="/public/templated/images/thumbs/11.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all people">
-                <a href="/public/templated/images/fulls/04.jpg"><img src="/public/templated/images/thumbs/04.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all place">
-                <a href="/public/templated/mages/fulls/08.jpg"><img src="/public/templated/images/thumbs/08.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
-              <div class="media all thing">
-                <a href="/public/templated/images/fulls/12.jpg"><img src="/public/templated/images/thumbs/12.jpg" alt="" title="This right here is a caption." /></a>
-              </div>
+            <div class="content" id="content">
+              <?php afficherPhotos($bdd, ""); ?>
             </div>
         </div>
+        <script src="../js/galerie.js"></script>
 <?php require_once "footer.php"; ?>
